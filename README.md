@@ -6,6 +6,9 @@
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](#Contributing)
 [![GitHub issues](https://img.shields.io/github/issues/khoih-prog/AsyncUDP_RP2040W.svg)](http://github.com/khoih-prog/AsyncUDP_RP2040W/issues)
 
+<a href="https://www.buymeacoffee.com/khoihprog6" title="Donate to my libraries using BuyMeACoffee"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Donate to my libraries using BuyMeACoffee" style="height: 50px !important;width: 181px !important;" ></a>
+<a href="https://www.buymeacoffee.com/khoihprog6" title="Donate to my libraries using BuyMeACoffee"><img src="https://img.shields.io/badge/buy%20me%20a%20coffee-donate-orange.svg?logo=buy-me-a-coffee&logoColor=FFDD00" style="height: 20px !important;width: 200px !important;" ></a>
+
 ---
 ---
 
@@ -22,6 +25,7 @@
   * [Use Arduino Library Manager](#use-arduino-library-manager)
   * [Manual Install](#manual-install)
   * [VS Code & PlatformIO](#vs-code--platformio)
+* [HOWTO Fix `Multiple Definitions` Linker Error](#howto-fix-multiple-definitions-linker-error) 
 * [HOWTO Setting up the Async UDP Client](#howto-setting-up-the-async-udp-client)
 * [Examples](#examples)
   * [1. For RASPBERRY_PI_PICO_W](#1-for-RASPBERRY_PI_PICO_W)
@@ -116,6 +120,33 @@ The best way is to use `Arduino Library Manager`. Search for `AsyncUDP_RP2040W`,
 2. Install [PlatformIO](https://platformio.org/platformio-ide)
 3. Install [**AsyncUDP_RP2040W** library](https://registry.platformio.org/libraries/khoih-prog/AsyncUDP_RP2040W) by using [Library Manager](https://registry.platformio.org/libraries/khoih-prog/AsyncUDP_RP2040W/installation). Search for AsyncUDP_RP2040W in [Platform.io Author's Libraries](https://platformio.org/lib/search?query=author:%22Khoi%20Hoang%22)
 4. Use included [platformio.ini](platformio/platformio.ini) file from examples to ensure that all dependent libraries will installed automatically. Please visit documentation for the other options and examples at [Project Configuration File](https://docs.platformio.org/page/projectconf.html)
+
+
+---
+---
+
+### HOWTO Fix `Multiple Definitions` Linker Error
+
+The current library implementation, using `xyz-Impl.h` instead of standard `xyz.cpp`, possibly creates certain `Multiple Definitions` Linker error in certain use cases.
+
+You can include this `.hpp` file
+
+```
+// Can be included as many times as necessary, without `Multiple Definitions` Linker Error
+#include "AsyncUDP_RP2040W.hpp"         //https://github.com/khoih-prog/AsyncUDP_RP2040W
+```
+
+in many files. But be sure to use the following `.h` file **in just 1 `.h`, `.cpp` or `.ino` file**, which must **not be included in any other file**, to avoid `Multiple Definitions` Linker Error
+
+```
+// To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
+#include "AsyncUDP_RP2040W.h"           //https://github.com/khoih-prog/AsyncUDP_RP2040W
+```
+
+Check the [**multiFileProject** example](examples/multiFileProject) for a `HOWTO` demo.
+
+Have a look at the discussion in [Different behaviour using the src_cpp or src_h lib #80](https://github.com/khoih-prog/ESPAsync_WiFiManager/discussions/80)
+
 
 ---
 ---
@@ -296,7 +327,7 @@ Start AsyncUdpNTPClient on RASPBERRY_PI_PICO_W
 AsyncUDP_RP2040W v1.0.0
 Connecting to SSID: HueNet1
 SSID: HueNet1
-Local IP Address: 192.168.2.94
+Local IP Address: 192.168.2.87
 signal strength (RSSI):-25 dBm
 UDP connected
 ============= createNTPpacket =============
