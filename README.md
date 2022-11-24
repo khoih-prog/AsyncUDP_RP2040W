@@ -1,4 +1,4 @@
-# AsyncUDP_RP2040W
+# AsyncUDP_RP2040W Library
 
 
 [![arduino-library-badge](https://www.ardu-badge.com/badge/AsyncUDP_RP2040W.svg?)](https://www.ardu-badge.com/AsyncUDP_RP2040W)
@@ -6,8 +6,11 @@
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](#Contributing)
 [![GitHub issues](https://img.shields.io/github/issues/khoih-prog/AsyncUDP_RP2040W.svg)](http://github.com/khoih-prog/AsyncUDP_RP2040W/issues)
 
+
 <a href="https://www.buymeacoffee.com/khoihprog6" title="Donate to my libraries using BuyMeACoffee"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Donate to my libraries using BuyMeACoffee" style="height: 50px !important;width: 181px !important;" ></a>
 <a href="https://www.buymeacoffee.com/khoihprog6" title="Donate to my libraries using BuyMeACoffee"><img src="https://img.shields.io/badge/buy%20me%20a%20coffee-donate-orange.svg?logo=buy-me-a-coffee&logoColor=FFDD00" style="height: 20px !important;width: 200px !important;" ></a>
+<a href="https://profile-counter.glitch.me/khoih-prog/count.svg" title="Total khoih-prog Visitor count"><img src="https://profile-counter.glitch.me/khoih-prog/count.svg" style="height: 30px;width: 200px;"></a>
+<a href="https://profile-counter.glitch.me/khoih-prog-AsyncUDP_RP2040W/count.svg" title="AsyncUDP_RP2040W Visitor count"><img src="https://profile-counter.glitch.me/khoih-prog-AsyncUDP_RP2040W/count.svg" style="height: 30px;width: 200px;"></a>
 
 ---
 ---
@@ -86,7 +89,7 @@ to apply the better and faster **asynchronous** feature of the **powerful** [ESP
 1. **RASPBERRY_PI_PICO_W with CYW43439 WiFi** using [**arduino-pico core v2.4.0+**](https://github.com/earlephilhower/arduino-pico)
 
 <p align="center">
-    <img src="https://github.com/khoih-prog/AsyncUDP_RP2040W/blob/main/pics/RP2040W-pinout.svg">
+    <img src="https://github.com/khoih-prog/AsyncUDP_RP2040W/raw/main/pics//RP2040W-pinout.svg">
 </p>
 
 ---
@@ -95,7 +98,7 @@ to apply the better and faster **asynchronous** feature of the **powerful** [ESP
 ## Prerequisites
 
  1. [`Arduino IDE 1.8.19+` for Arduino](https://github.com/arduino/Arduino). [![GitHub release](https://img.shields.io/github/release/arduino/Arduino.svg)](https://github.com/arduino/Arduino/releases/latest)
- 2. [`Earle Philhower's arduino-pico core v2.4.0+`](https://github.com/earlephilhower/arduino-pico) for **RASPBERRY_PI_PICO_W with CYW43439 WiFi**, etc. [![GitHub release](https://img.shields.io/github/release/earlephilhower/arduino-pico.svg)](https://github.com/earlephilhower/arduino-pico/releases/latest)
+ 2. [`Earle Philhower's arduino-pico core v2.6.3+`](https://github.com/earlephilhower/arduino-pico) for **RASPBERRY_PI_PICO_W with CYW43439 WiFi**, etc. [![GitHub release](https://img.shields.io/github/release/earlephilhower/arduino-pico.svg)](https://github.com/earlephilhower/arduino-pico/releases/latest)
  
 ---
 
@@ -131,14 +134,14 @@ The current library implementation, using `xyz-Impl.h` instead of standard `xyz.
 
 You can include this `.hpp` file
 
-```
+```cpp
 // Can be included as many times as necessary, without `Multiple Definitions` Linker Error
 #include "AsyncUDP_RP2040W.hpp"         //https://github.com/khoih-prog/AsyncUDP_RP2040W
 ```
 
 in many files. But be sure to use the following `.h` file **in just 1 `.h`, `.cpp` or `.ino` file**, which must **not be included in any other file**, to avoid `Multiple Definitions` Linker Error
 
-```
+```cpp
 // To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
 #include "AsyncUDP_RP2040W.h"           //https://github.com/khoih-prog/AsyncUDP_RP2040W
 ```
@@ -322,7 +325,7 @@ https://github.com/khoih-prog/AsyncUDP_RP2040W/blob/0e4b84496ab39cb0e00a79accdc8
 
 This is terminal debug output when running [AsyncUdpNTPClient](examples/AsyncUdpNTPClient) on **PRASPBERRY_PI_PICO_W using CYW43439 WiFi**. It connects to NTP Server `0.ca.pool.ntp.org` (IP=`208.81.1.244:123`) using AsyncUDP_RP2040W library, and requests NTP time every 60s. The packet is then **received and processed asynchronously** to print current UTC/GMT time.
 
-```
+```cpp
 Start AsyncUdpNTPClient on RASPBERRY_PI_PICO_W
 AsyncUDP_RP2040W v1.0.0
 Connecting to SSID: HueNet1
@@ -354,7 +357,7 @@ The UTC/GMT time is Sat 2021-10-09 03:19:38 GMT
 
 This is terminal debug output when running [AsyncUDPServer](examples/AsyncUDPServer) on **RASPBERRY_PI_PICO_W using CYW43439 WiFi**. It receives UDP packets from a PC running test Python program [UDP_packet_send.py](examples/UDP_packet_send/UDP_packet_send.py) to send UDP packets.
 
-```
+```cpp
 Start AsyncUDPServer on RASPBERRY_PI_PICO_W
 AsyncUDP_RP2040W v1.0.0
 Connecting to SSID: HueNet1
@@ -371,7 +374,7 @@ UDP Packet Type: Unicast, From: 192.168.2.30:33380, To: 192.168.2.87:1234, Lengt
 
 This is terminal debug output when running [AsyncUDPMulticastServer](examples/AsyncUDPMulticastServer) on **RASPBERRY_PI_PICO_W using CYW43439 WiFi**. It receives UDP packets from from a PC running test Python program [UDP_packet_send.py](examples/UDP_packet_send/UDP_packet_send.py) to send UDP packets.
 
-```
+```cpp
 Start AsyncUDPMulticastServer on RASPBERRY_PI_PICO_W
 AsyncUDP_RP2040W v1.0.0
 Connecting to SSID: HueNet1
@@ -432,7 +435,9 @@ Submit issues to: [AsyncUDP_RP2040W issues](https://github.com/khoih-prog/AsyncU
 
  1. Add support to **RASPBERRY_PI_PICO_W with CYW43439 WiFi**, using [**arduino-pico core v2.4.0+**](https://github.com/earlephilhower/arduino-pico)
  2. Add Table of Contents
-
+ 3. Add astyle using `allman` style. Restyle the library
+ 
+ 
 ---
 ---
 
@@ -467,6 +472,6 @@ If you want to contribute to this project:
 
 ## Copyright
 
-Copyright 2022- Khoi Hoang
+Copyright (c) 2022- Khoi Hoang
 
 

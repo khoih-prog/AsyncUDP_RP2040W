@@ -2,7 +2,7 @@
   AsyncUDPMulticastServer.ino
 
   AsyncUDP_RP2040W is a library for the RP2040W with CYW43439 WiFi
-  
+
   Based on and modified from ESPAsyncUDP (https://github.com/me-no-dev/ESPAsyncUDP)
   Built by Khoi Hoang https://github.com/khoih-prog/AsyncUDP_RP2040W
  *****************************************************************************************************************************/
@@ -44,8 +44,8 @@ void parsePacket(AsyncUDPPacket packet)
   Serial.print(", Data: ");
   Serial.write(packet.data(), packet.length());
   Serial.println();
-  
-  snprintf(buf, sizeof(buf) -1, "Got %u bytes of data", packet.length());
+
+  snprintf(buf, sizeof(buf) - 1, "Got %u bytes of data", packet.length());
   //reply to the client
   // size_t write(const uint8_t *data, size_t len);
   packet.write((uint8_t*) buf, strlen(buf));
@@ -72,17 +72,20 @@ void printWifiStatus()
 void setup()
 {
   Serial.begin(115200);
+
   while (!Serial && millis() < 5000);
 
-  Serial.print("\nStart AsyncUDPMulticastServer on "); Serial.println(BOARD_NAME);
+  Serial.print("\nStart AsyncUDPMulticastServer on ");
+  Serial.println(BOARD_NAME);
   Serial.println(ASYNC_UDP_RP2040W_VERSION);
-  
+
   ///////////////////////////////////
-  
+
   // check for the WiFi module:
   if (WiFi.status() == WL_NO_MODULE)
   {
     Serial.println("Communication with WiFi module failed!");
+
     // don't continue
     while (true);
   }
@@ -93,12 +96,12 @@ void setup()
   status = WiFi.begin(ssid, pass);
 
   delay(1000);
-   
+
   // attempt to connect to WiFi network
   while ( status != WL_CONNECTED)
   {
     delay(500);
-        
+
     // Connect to WPA/WPA2 network
     status = WiFi.status();
   }

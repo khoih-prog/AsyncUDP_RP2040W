@@ -2,11 +2,11 @@
   AsyncUDPSendReceive.ino
 
   For RP2040W with CYW43439 WiFi
-     
+
   AsyncUDP_RP2040W is a library for the RP2040W with CYW43439 WiFi
-  
+
   Based on and modified from ESPAsyncUDP (https://github.com/me-no-dev/ESPAsyncUDP)
-  Built by Khoi Hoang https://github.com/khoih-prog/AsyncUDP_RP2040W 
+  Built by Khoi Hoang https://github.com/khoih-prog/AsyncUDP_RP2040W
  *****************************************************************************************************************************/
 
 #include "defines.h"
@@ -39,7 +39,7 @@ int status = WL_IDLE_STATUS;
 void sendACKPacket(void)
 {
   Serial.println("============= sendACKPacket =============");
-  
+
   // Send unicast ACK to the same remoteIP and remotePort we received the packet
   // The AsyncUDP_STM32 library will take care of the correct IP and port based on pcb
   Udp.write((uint8_t *) ReplyBuffer, sizeof(ReplyBuffer));
@@ -59,7 +59,7 @@ void createNTPpacket(void)
   packetBuffer[1]   = 0;     // Stratum, or type of clock
   packetBuffer[2]   = 6;     // Polling Interval
   packetBuffer[3]   = 0xEC;  // Peer Clock Precision
-  
+
   // 8 bytes of zero for Root Delay & Root Dispersion
   packetBuffer[12]  = 49;
   packetBuffer[13]  = 0x4E;
@@ -78,7 +78,7 @@ void parsePacket(AsyncUDPPacket packet)
 {
   struct tm  ts;
   char       buf[80];
-  
+
   memcpy(packetBuffer, packet.data(), sizeof(packetBuffer));
 
   Serial.print("Received UDP Packet Type: ");
@@ -101,20 +101,20 @@ void parsePacket(AsyncUDPPacket packet)
   // combine the four bytes (two words) into a long integer
   // this is NTP time (seconds since Jan 1 1900):
   unsigned long secsSince1900 = highWord << 16 | lowWord;
-  
+
   Serial.print(F("Seconds since Jan 1 1900 = "));
   Serial.println(secsSince1900);
 
   // now convert NTP time into )everyday time:
   Serial.print(F("Epoch/Unix time = "));
-  
+
   // Unix time starts on Jan 1 1970. In seconds, that's 2208988800:
   const unsigned long seventyYears = 2208988800UL;
-  
+
   // subtract seventy years:
   unsigned long epoch = secsSince1900 - seventyYears;
   time_t epoch_t = epoch;   //secsSince1900 - seventyYears;
- 
+
   // print Unix time:
   Serial.println(epoch);
 
@@ -150,17 +150,20 @@ void printWifiStatus()
 void setup()
 {
   Serial.begin(115200);
+
   while (!Serial && millis() < 5000);
 
-  Serial.print("\nStart AsyncUDPSendReceive on "); Serial.println(BOARD_NAME);
+  Serial.print("\nStart AsyncUDPSendReceive on ");
+  Serial.println(BOARD_NAME);
   Serial.println(ASYNC_UDP_RP2040W_VERSION);
-  
+
   ///////////////////////////////////
-  
+
   // check for the WiFi module:
   if (WiFi.status() == WL_NO_MODULE)
   {
     Serial.println("Communication with WiFi module failed!");
+
     // don't continue
     while (true);
   }
@@ -171,12 +174,12 @@ void setup()
   status = WiFi.begin(ssid, pass);
 
   delay(1000);
-   
+
   // attempt to connect to WiFi network
   while ( status != WL_CONNECTED)
   {
     delay(500);
-        
+
     // Connect to WPA/WPA2 network
     status = WiFi.status();
   }

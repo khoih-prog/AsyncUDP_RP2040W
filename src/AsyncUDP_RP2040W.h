@@ -1,24 +1,24 @@
 /****************************************************************************************************************************
   AsyncUDP_RP2040W.h
-  
+
   For RP2040W with CYW43439 WiFi
-     
+
   AsyncUDP_RP2040W is a library for the RP2040W with CYW43439 WiFi
-  
+
   Based on and modified from ESPAsyncUDP (https://github.com/me-no-dev/ESPAsyncUDP)
   Built by Khoi Hoang https://github.com/khoih-prog/AsyncUDP_RP2040W
-  
-  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
+
+  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License
   as published bythe Free Software Foundation, either version 3 of the License, or (at your option) any later version.
   This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
   You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.
- 
+
   Version: 1.0.0
-  
+
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
-  1.0.0   K Hoang      14/08/2022 Initial coding for RP2040W with CYW43439 WiFi                   
+  1.0.0   K Hoang      14/08/2022 Initial coding for RP2040W with CYW43439 WiFi
  *****************************************************************************************************************************/
 
 #pragma once
@@ -27,7 +27,7 @@
 #define ASYNC_UDP_RP2040W_H
 
 #if ( defined(ARDUINO_RASPBERRY_PI_PICO_W) )
-      
+
   #if (_ASYNCTCP_RP2040W_LOGLEVEL_ > 2)
     #if defined(ARDUINO_RASPBERRY_PI_PICO_W)
       #warning RASPBERRY_PI_PICO_W board using CYW4343 WiFi selected
@@ -40,7 +40,7 @@
     #undef WIFI_USE_RP2040
   #endif
   #define WIFI_USE_RP2040      true
-  
+
   #if (_ASYNCTCP_RP2040W_LOGLEVEL_ > 2)
     #warning Use RP2040 architecture from WiFiWebServer
   #endif
@@ -48,14 +48,14 @@
 #else
 
   #error For RASPBERRY_PI_PICO_W board using CYW43439 WiFi only
-    
+
 #endif
 
 #if defined(SHIELD_TYPE)
   #undef SHIELD_TYPE
 #endif
 
-#define SHIELD_TYPE													"RP2040W CYW43439 WiFi"
+#define SHIELD_TYPE                         "RP2040W CYW43439 WiFi"
 
 #define ASYNC_UDP_RP2040W_VERSION            "AsyncUDP_RP2040W v1.0.0"
 
@@ -91,19 +91,19 @@
 
 extern "C"
 {
-  #include "lwip/init.h"
-  #include "lwip/opt.h"
-  #include "lwip/ip_addr.h"
-  #include "lwip/inet.h"
-  #include "lwip/err.h"
-  #include "lwip/pbuf.h"
-  #include "lwip/udp.h"
-  #include "lwip/igmp.h"
-  #include "lwip/dns.h"
+#include "lwip/init.h"
+#include "lwip/opt.h"
+#include "lwip/ip_addr.h"
+#include "lwip/inet.h"
+#include "lwip/err.h"
+#include "lwip/pbuf.h"
+#include "lwip/udp.h"
+#include "lwip/igmp.h"
+#include "lwip/dns.h"
 };
 
 #ifndef TCP_MSS
-  #define TCP_MSS				1460
+  #define TCP_MSS       1460
 #endif
 
 class AsyncUDP;
@@ -127,18 +127,18 @@ class AsyncUDPMessage : public Print
     uint8_t *_buffer;
     size_t _index;
     size_t _size;
-    
+
   public:
     AsyncUDPMessage(size_t size = TCP_MSS /*1460*/);
     virtual ~AsyncUDPMessage();
-    
+
     size_t write(const uint8_t *data, size_t len);
     size_t write(uint8_t data);
     size_t space();
     uint8_t * data();
     size_t length();
     void flush();
-    
+
     operator bool()
     {
       return _buffer != NULL;
@@ -157,9 +157,10 @@ class AsyncUDPPacket : public Print
     uint16_t _remotePort;
     uint8_t *_data;
     size_t _len;
-    
+
   public:
-    AsyncUDPPacket(AsyncUDP *udp, ip_addr_t *localIp, uint16_t localPort, ip_addr_t *remoteIp, uint16_t remotePort, uint8_t *data, size_t len);
+    AsyncUDPPacket(AsyncUDP *udp, ip_addr_t *localIp, uint16_t localPort, ip_addr_t *remoteIp, uint16_t remotePort,
+                   uint8_t *data, size_t len);
     virtual ~AsyncUDPPacket();
 
     uint8_t * data();
